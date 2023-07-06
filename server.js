@@ -3,6 +3,7 @@ const serverConfig = require("./configs/server.config");
 const mongoose = require("mongoose");
 const dbConfig = require("./configs/db.config");
 const userModel = require("./models/user.model");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -21,7 +22,7 @@ db.once("open", () => {
 });
 
 async function init() {
-  /*Initilze and create user
+  /*Initialize and create user
    */
 
   let admin = await userModel.findOne({
@@ -38,7 +39,7 @@ async function init() {
     userId: "admin",
     email: "laxmahenricks94@gmail.com",
     userType: "ADMIN",
-    password: "laxman@781",
+    password: bcrypt.hashSync("laxman@781", 8),
   });
   console.log(admin);
 }
